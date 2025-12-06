@@ -8,7 +8,7 @@ app.get('/ping', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-  res.send('Home page server running with new changes!');
+  res.send('Home page of Antti. The server running with new changes!');
 });
 
 app.listen(PORT, '0.0.0.0', () => {
