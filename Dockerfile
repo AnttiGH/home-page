@@ -1,16 +1,36 @@
-FROM node:18-alpine
+FROM node:lts-alpine AS builder
+
+# Build the frontend (Vite) in a separate stage
+WORKDIR /build
+
+# Copy only frontend sources & package files for better cache
+COPY frontend/package*.json ./frontend/
+COPY frontend ./frontend
+
+RUN cd frontend \
+	&& npm install \
+	&& npm run build
+
+
+FROM node:lts-alpine
 
 WORKDIR /usr/src/app
 
-# Install dependencies first for better caching
+# Install server dependencies (production only)
 COPY package*.json ./
-# Use npm install to work without a package-lock.json file; keeps image small by installing only prod deps
 RUN npm install --production
 
-# Copy source
-COPY . .
+# Copy server sources
+COPY api ./api
+COPY .dockerignore ./
+
+# Copy other repo files (if any) that the server needs
+COPY package.json ./
+
+# Copy built frontend from builder into bundle/
+COPY --from=builder /build/frontend/dist ./bundle
 
 ENV PORT=8080
 EXPOSE 8080
 
-CMD ["node", "src/index.js"]
+CMD ["node", "api/index.js"]
