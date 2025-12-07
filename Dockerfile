@@ -4,10 +4,10 @@ FROM node:lts-alpine AS builder
 WORKDIR /build
 
 # Copy only frontend sources & package files for better cache
-COPY frontend/package*.json ./frontend/
-COPY frontend ./frontend
+COPY public/package*.json ./public/
+COPY public ./public
 
-RUN cd frontend \
+RUN cd public \
 	&& npm install \
 	&& npm run build
 
@@ -28,7 +28,7 @@ COPY .dockerignore ./
 COPY package.json ./
 
 # Copy built frontend from builder into bundle/
-COPY --from=builder /build/frontend/dist ./bundle
+COPY --from=builder /build/public/dist ./bundle
 
 ENV PORT=8080
 EXPOSE 8080
