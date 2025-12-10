@@ -2,9 +2,9 @@
   "name": "home-page",
   "version": "0.1.0",
   "description": "Minimal Express server for Cloud Run with /ping endpoint",
-  "main": "api/index.js",
+  "main": "src/api/index.js",
   "scripts": {
-    "start": "node api/index.js"
+    "start": "node src/api/index.js"
   },
   "engines": {
     "node": ">=18"

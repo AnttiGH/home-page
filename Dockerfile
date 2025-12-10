@@ -4,8 +4,8 @@ FROM node:lts-alpine AS builder
 WORKDIR /build
 
 # Copy only frontend sources & package files for better cache
-COPY public/package*.json ./public/
-COPY public ./public
+COPY src/public/package*.json ./public/
+COPY src/public ./public
 
 RUN cd public \
 	&& npm install \
@@ -21,7 +21,7 @@ COPY package*.json ./
 RUN npm install --production
 
 # Copy server sources
-COPY api ./api
+COPY src/api ./api
 COPY .dockerignore ./
 
 # Copy other repo files (if any) that the server needs

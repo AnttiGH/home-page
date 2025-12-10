@@ -1,26 +1,22 @@
-version: '3.8'
 services:
   frontend:
     build:
-      context: ./public
-      dockerfile: Dockerfile.dev
-    volumes:
-      - ./frontend:/app:delegated
-      - /app/node_modules
+      context: ./src/public
+
     ports:
       - "5174:5173"
     environment:
       - CHOKIDAR_USEPOLLING=true
     command: ["sh", "-c", "npm install --silent && npm run dev -- --host 0.0.0.0"]
 
-  public:
+  api:
     image: node:18-alpine
     working_dir: /app
     volumes:
-      - ./public:/app:delegated
+      - ./:/app:delegated
       - /app/node_modules
     ports:
-      - "5173:5173"
+      - "5173:8080"
     environment:
       - CHOKIDAR_USEPOLLING=true
-    command: ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+    command: ["sh", "-c", "npm install --silent && npm start"]
