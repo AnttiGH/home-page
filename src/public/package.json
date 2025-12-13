@@ -16,11 +16,10 @@
     "type-check": "tsc -b --noEmit"
   },
   "dependencies": {
-    "@reduxjs/toolkit": "^2.6.1",
     "firebase": "^12.6.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-redux": "^9.2.0"
+    "react-router-dom": "^6.14.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.23.0",

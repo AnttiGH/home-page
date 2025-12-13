@@ -1,10 +1,5 @@
 import { useEffect, useState } from 'react'
-import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged,
-} from 'firebase/auth'
+import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth'
 import { auth } from '../lib/firebase/config'
 
 export default function AuthDemo() {
@@ -33,17 +28,7 @@ export default function AuthDemo() {
     }
   }
 
-  const handleSignup = async () => {
-    setLoading(true)
-    setError(null)
-    try {
-      await createUserWithEmailAndPassword(auth, email, password)
-    } catch (err: any) {
-      setError(err?.message ?? 'Signup failed')
-    } finally {
-      setLoading(false)
-    }
-  }
+
 
   const handleLogout = async () => {
     await signOut(auth)
@@ -74,9 +59,6 @@ export default function AuthDemo() {
             onChange={(e) => setPassword(e.target.value)}
             style={{ marginRight: 8 }}
           />
-          <button onClick={handleSignup} disabled={loading} style={{ marginRight: 8 }}>
-            Sign up
-          </button>
           <button onClick={handleLogin} disabled={loading}>
             Sign in
           </button>
